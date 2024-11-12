@@ -8,6 +8,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 
 // Define the interface for a single product item
@@ -36,11 +37,12 @@ const Table: React.FC<TableProps> = ({ data }) => {
             <CiFilter className="plusSvg" />
             <span>Filter By</span>
           </button>
-
+          <Link href={"/add-pack"}>
           <button className="btn-primary">
             <FiPlus className="plusSvg" />
             <span>New Product</span>
           </button>
+          </Link>
         </div>
       </div>
 

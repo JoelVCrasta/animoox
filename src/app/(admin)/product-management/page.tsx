@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {fetchProducts} from "../../_apiEndpoint/endpoint"
 import toast, { Toaster } from "react-hot-toast";
 import Table from "../_components/table";
 import TableTraffic from "../_components/tableTrafficSource";
@@ -8,6 +9,8 @@ import Iphone from "../../../assets/images/iphone.png";
 
 const ProductManagement = () => {
   const [isAllProduct, setIsAllProduct] = useState(true);
+  // const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   const data = [
     {
       productName: "iPhone 16 Pro",
@@ -210,6 +213,26 @@ const ProductManagement = () => {
       increment: true,
     },
   ];
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        setIsLoading(true);
+        const products = await fetchProducts();
+        console.log(products,"products")
+        // setData(products)
+      } catch (error) {
+        toast.error("Failed to load products.");
+        console.error("Error loading products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <section className="flex">
       <Toaster />

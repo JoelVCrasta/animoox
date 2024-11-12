@@ -103,7 +103,7 @@ const NavItems = [
     },
     {
         title: "Product Management",
-        href: "#",
+        href: "/product-management",
         icon: <ManagementBoxIcon />,
     },
     {
