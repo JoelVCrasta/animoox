@@ -1,4 +1,5 @@
 // app/api/cart/route.ts
+import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
   }
 
-  const user = await globalThis.prisma?.user.findUnique({
+  const user = await db.user.findUnique({
     where: { id: userId },
     select: { cartItems: true },
   });
@@ -29,11 +30,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'User ID and Product ID are required' }, { status: 400 });
   }
 
-  const user = await globalThis.prisma?.user.update({
+  const user = await db.user.update({
     where: { id: userId },
     data: {
       cartItems: {
-        push: productId, // Adds the productId to the cartItems array
+        push: productId,
       },
     },
   });
@@ -53,10 +54,11 @@ export async function DELETE(request: Request) {
     where: { id: userId },
     data: {
       cartItems: {
+        // @ts-ignore
         set: (await globalThis.prisma?.user.findUnique({
           where: { id: userId },
           select: { cartItems: true },
-        })).cartItems.filter((item) => item !== productId), // Removes the productId from the cartItems array
+        })).cartItems.filter((item) => item !== productId),
       },
     },
   });

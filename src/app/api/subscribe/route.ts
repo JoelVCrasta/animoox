@@ -7,9 +7,6 @@ import { absoluteUrl } from "@/lib/utils";
 
 const settingsUrl = absoluteUrl("/settings");
 
-
-// const session = await currentRole();
-
 export async function GET() {
     try {
         console.log("GET /api/subscribe");

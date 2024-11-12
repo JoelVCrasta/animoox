@@ -1,4 +1,5 @@
 // app/api/cart/bulk/route.ts
+import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
   }
 
   // Fetch the existing cart items
-  const user = await globalThis.prisma?.user.findUnique({
+  const user = await db.user.findUnique({
     where: { id: userId },
     select: { cartItems: true },
   });
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
   const updatedCartItems = Array.from(new Set([...user.cartItems, ...productIds]));
 
   // Update the user's cartItems with the combined list
-  await globalThis.prisma?.user.update({
+  await db.user.update({
     where: { id: userId },
     data: { cartItems: updatedCartItems },
   });

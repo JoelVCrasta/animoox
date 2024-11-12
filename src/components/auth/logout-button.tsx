@@ -14,7 +14,7 @@ export const LogoutButton = ({
   };
 
   return (
-    <span onClick={onClick} className="cursor-pointer">
+    <span onClick={onClick} className="cursor-pointer w-full">
       {children}
     </span>
   );

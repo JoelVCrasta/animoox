@@ -6,28 +6,26 @@ import { useEffect, useState } from "react";
 import { addToCart } from "@/lib/cart-utils";
 
 export default function Page(): JSX.Element {
-  const [isLoggedIn, setIsLoggedIn]=useState(false)
-  const [productData, setProductData]=useState([{}])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [productData, setProductData] = useState([{}])
   const [activeCategory, setActiveCategory] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [selectedDropdownOption, setSelectedDropdownOption] = useState('Featured')
 
-  useEffect(()=>{
+  useEffect(() => {
     //Add the logic for fetching the products from the DB
-    const getAllProducts=async()=>{
+    const getAllProducts = async () => {
       const data = await fetch('/api/product');
       console.log(data)
       const products = await data.json();
-      setProductData(()=>products)
+      setProductData(() => products)
     }
     getAllProducts();
   }, [])
 
-  const addToSessionCart=async(productId:string)=>{
-    if(!isLoggedIn){
-      await addToCart(productId);
-    }
+  const addToSessionCart = async (productId: string) => {
+    addToCart(productId);
   }
 
 
@@ -37,13 +35,13 @@ export default function Page(): JSX.Element {
       <h1>Illustration & Animation sets</h1>
       <h4 className="text-xl text-secondary-text">Extensive amount of file formats, compatible with all design software.</h4>
       <div className="w-full px-20">
-        <ProductNavigation activeCategory={activeCategory} setActiveCategory={setActiveCategory} searchQuery={searchQuery} setSearchQuery={setSearchQuery} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} selectedDropdownOption={selectedDropdownOption} setSelectedDropdownOption={setSelectedDropdownOption}/>
+        <ProductNavigation activeCategory={activeCategory} setActiveCategory={setActiveCategory} searchQuery={searchQuery} setSearchQuery={setSearchQuery} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} selectedDropdownOption={selectedDropdownOption} setSelectedDropdownOption={setSelectedDropdownOption} />
       </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 w-full gap-6 px-20">
-          {productData.map((data, index) => (
-            <ProductComponent key={index} {...data} addToSessionCart={addToSessionCart}/>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 w-full gap-6 px-20">
+        {productData.length > 0 && productData.map((data, index) => (
+          <ProductComponent key={index} {...data} addToSessionCart={addToSessionCart} />
+        ))}
+      </div>
     </main>
   );
 }

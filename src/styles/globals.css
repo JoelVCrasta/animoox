@@ -39,3 +39,11 @@
     line-height: 34px !important;
   }
 }
+
+
+.upload-cloud-circle {
+  fill: linear-gradient(180deg, #FFF 0%, #F0F6FF 100%);
+  stroke-width: 1px;
+  stroke: #EBF0FF;
+  box-shadow: -5px -5px 10px 0px rgba(29, 29, 29, 0.15) inset, 4px 2px 4px 0px rgba(29, 29, 29, 0.03) inset;
+}
