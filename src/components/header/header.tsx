@@ -14,7 +14,6 @@ import { HeaderDropdownIcon } from "@/assets/icons/header-dropdown-icon";
 
 export const Header = (): JSX.Element => {
   const { data: session } = useSession();
-  console.log(session)
   const [showProductMenu, setShowProductMenu] = useState<boolean>(false);
   const [showAuthMenu, setShowAuthMenu] = useState<boolean>(false);
 

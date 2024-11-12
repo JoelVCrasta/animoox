@@ -23,7 +23,11 @@ export async function POST(req: NextRequest) {
   } = body
 
   try {
+<<<<<<< HEAD
     await db.pack.create({
+=======
+    await db.packs.create({
+>>>>>>> d82d0149b20df6b95777d18d23730e0b6f50cccc
       data: {
         title,
         subtitle,
