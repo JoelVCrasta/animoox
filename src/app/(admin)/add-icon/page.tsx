@@ -89,19 +89,10 @@ const AddIcon = () => {
   }
 
   return (
-    <section className="flex">
+    <section className="w-full">
       <Toaster />
-      <div className="w-80 bg-white">sidebar</div>
 
-      <div className="w-full p-4 md:p-10">
-        <div>
-          <div className="space-y-2">
-            <p className="text-sm text-gray-700/80">Pages / Add Product</p>
-            <p className="text-3xl font-bold text-gray-700">Add New Icon</p>
-          </div>
-
-          <div></div>
-        </div>
+      <div className="w-full p-4 md:px-10">
 
         <HeadingInfo
           title="Add the icon information below"

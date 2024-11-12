@@ -16,19 +16,19 @@ const HeadingInfo = ({
 }: IHeadingInfo) => {
   return (
     <div className="flex flex-col gap-y-2 md:flex-row items-start md:items-center justify-between py-4">
-      <h2 className="font-semibold text-lg text-gray-700">{title}</h2>
+      <p className="font-medium text-xl text-gray-500">{title}</p>
 
       <div className="w-full md:w-fit flex justify-between space-x-4">
         <button
           onClick={handleSaveAsDraft}
-          className="py-3 px-6 font-semibold text-gray-400 border-2 border-gray-400 rounded-full text-sm"
+          className="py-5 px-8 font-medium text-gray-600 border-2 border-gray-400 rounded-full text-lg "
         >
           Save as draft
         </button>
 
         <button
           onClick={handlePublishProduct}
-          className="py-3 px-4 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300 flex items-center"
+          className="py-5 px-6 text-lg font-medium bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300 flex items-center"
         >
           {loading ? (
             <RotatingLines width="20" strokeColor="white" />

@@ -171,15 +171,8 @@ const AddPack = () => {
   return (
     <section className="flex">
       <Toaster />
-      <div className="w-80 bg-white">sidebar</div>
 
       <div className="w-full p-4 md:p-10">
-        <div>
-          <div className="space-y-2">
-            <p className="text-sm text-gray-700/80">Pages / Add Product</p>
-            <p className="text-3xl font-bold text-gray-700">Add New Icon</p>
-          </div>
-        </div>
 
         <HeadingInfo
           title="Add the pack information below"
