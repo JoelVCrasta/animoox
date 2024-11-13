@@ -53,3 +53,13 @@ export const filesSchema = z.object({
   featureImageFiles: z.array(z.instanceof(File)).min(1),
   productViewImageFiles: z.array(z.instanceof(File)).min(1),
 })
+
+export const requestProjectSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  name: z.string().min(1, { message: "Name is required" }),
+  message: z.string().min(1, { message: "Message is required" }),
+  attachmentUrl: z.string().min(1, { message: "A file is required" }),
+  projectType: z.string().min(1, { message: "Project type is required" }),
+  budget: z.string().min(1, { message: "Budget is required" }),
+  userId: z.string().min(1, { message: "User ID is required" }),
+})
