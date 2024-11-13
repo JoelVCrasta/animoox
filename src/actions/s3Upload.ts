@@ -33,7 +33,7 @@ export async function singleFileUpload(
     const fileUrl = `https://${process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN}/${folder}/${fileName}`
     return {
       s3Status: "success",
-      fileUrl: fileUrl,
+      fileUrl: encodeURI(fileUrl),
     }
   } catch (err) {
     console.error("Error uploading file:", err)
