@@ -51,8 +51,8 @@ export const Header = (): JSX.Element => {
                 onClick={()=>setShowAuthMenu(p=>!p)}
               >
                 <ProfileIcon />
-                <p className="text-brand">{session.user.name}</p>
-                <div className="" onClick={()=>setShowAuthMenu(p=>!p)}>
+                <p className="text-brand">{session.user.displayName!==null?session.user.displayName:session.user.name}</p>
+                <div className="" >
                   <HeaderDropdownIcon />
                 </div>
               </Button>
@@ -94,13 +94,13 @@ export const Header = (): JSX.Element => {
 
       {showAuthMenu ? (
         <section
-          className="absolute flex flex-col gap-3 py-3 bg-bg p-6 shadow-2xl right-0 border translate-y-36 -translate-x-6 tra w-fit z-20 border-brand">
-          <Link className="font-extralight text-brand hover:text-brand cursor-pointer" href="/profile">Profile</Link>
-          <p className="font-extralight text-secondary-text hover:text-brand cursor-pointer">Purchased</p>
-          <p className="font-extralight text-secondary-text hover:text-brand cursor-pointer">My Current Plan</p>
-          <Link className="font-extralight text-secondary-text hover:text-brand cursor-pointer" href="/profile/account-settings">Account Settings</Link>
+          className="absolute flex flex-col gap-3 py-3 px-4 right-0 border translate-y-32 -translate-x-28 tra w-fit z-20 border-brand rounded bg-white">
+          <Link className="font-extralight text-brand hover:text-brand cursor-pointer text-sm" href="/profile">Profile</Link>
+          <Link className="font-extralight text-secondary-text hover:text-brand cursor-pointer text-sm" href="/profile/purchased">Purchased</Link>
+          <p className="font-extralight text-secondary-text hover:text-brand cursor-pointer text-sm">My Current Plan</p>
+          <Link className="font-extralight text-secondary-text hover:text-brand cursor-pointer text-sm" href="/profile/account-settings">Account Settings</Link>
           <hr />
-          <p className="font-extralight text-secondary-text hover:text-brand cursor-pointer" onClick={()=>signOut()}>Logout</p>
+          <p className="font-extralight text-secondary-text hover:text-brand cursor-pointer text-sm" onClick={()=>signOut()}>Logout</p>
         </section>
       ) : null}
     </header>

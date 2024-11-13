@@ -16,12 +16,7 @@ import { ProductivityStar } from "@/assets/icons/productivity-star"
 import { ProductivityRect } from "@/assets/icons/productivity-rect"
 import { ProductivityOval } from "@/assets/icons/productivity-oval"
 import { FaqIcon } from "@/assets/icons/faq-icon"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+import FAQAccordion from "@/components/accordian"
 
 
 const productTypes=[
@@ -262,44 +257,7 @@ export default function Page(): JSX.Element {
             <div className="w-full h-full p-10">
               <div className="w-full bg-secondary rounded h-full"></div>
             </div>
-            <div className="w-full">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1" className="border-brand border-t-brand border-l-brand border-r-brand" >
-                  <AccordionTrigger className="font-extralight text-md"> <p className="text-md font-extralight"> What type of digital assets do you offer?</p> </AccordionTrigger>
-                  <AccordionContent className="text-sm text-secondary-text font-extralight">
-                    We provide a wide range of digital assets, including illustrations, icons, Lottie animations, and various design elements.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2" className="border-brand border-t-brand border-l-brand border-r-brand">
-                  <AccordionTrigger className="font-extralight text-md">How many assets are available for download? </AccordionTrigger>
-                  <AccordionContent className="text-sm text-secondary-text font-extralight">
-                    We provide a wide range of digital assets, including illustrations, icons, Lottie animations, and various design elements.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3" className="border-brand border-t-brand border-l-brand border-r-brand">
-                  <AccordionTrigger className="font-extralight text-md">Are the assets customizable? </AccordionTrigger>
-                  <AccordionContent className="text-sm text-secondary-text font-extralight">
-                    We provide a wide range of digital assets, including illustrations, icons, Lottie animations, and various design elements.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4" className="border-brand border-t-brand border-l-brand border-r-brand">
-                  <AccordionTrigger className="font-extralight text-md">How do I download the assets? </AccordionTrigger>
-                  <AccordionContent className="text-sm text-secondary-text font-extralight">
-                    We provide a wide range of digital assets, including illustrations, icons, Lottie animations, and various design elements.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-5" className="border-brand border-t-brand border-l-brand border-r-brand">
-                  <AccordionTrigger className="font-extralight text-md">Can I use these assets for commercial projects? </AccordionTrigger>
-                  <AccordionContent className="text-sm text-secondary-text font-extralight">
-                    We provide a wide range of digital assets, including illustrations, icons, Lottie animations, and various design elements.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
+            <FAQAccordion />
 
           </div>
       </section>

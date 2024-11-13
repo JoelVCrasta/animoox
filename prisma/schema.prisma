@@ -16,6 +16,9 @@ enum UserRole {
 model User {
   id                    String                 @id @default(uuid()) @map("_id")
   name                  String?
+  firstName             String?
+  lastName              String?
+  displayName           String?
   email                 String?                @unique
   emailVerified         DateTime?
   image                 String?
@@ -170,4 +173,29 @@ model Pack {
   updatedAt            DateTime  @updatedAt
 
   @@map("packs")
+}
+
+model Order {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  name          String
+  email         String
+  message       String
+  projectType   ProjectType
+  budget        String
+  attachmentUrl String?  // URL to the uploaded file (e.g., AWS S3, Cloudinary)
+  createdAt     DateTime @default(now())
+
+  @@map("orders") // Optional: Maps the model to the "orders" collection in MongoDB
+}
+
+enum ProjectType {
+  Lottie
+  Rive
+  Illustration
+  Animation
+  WebDesign
+  UIDesign
+  Branding
+  ExplainerVideo
 }

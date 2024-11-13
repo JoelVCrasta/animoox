@@ -1,10 +1,28 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
+import { RequestProjectImage } from '@/assets/images';
+import Image from 'next/image';
+import { PhoneIcon } from '@/assets/icons/phone-icon';
+import { LocationIcon } from '@/assets/icons/location-icon';
+import { MailIcon } from '@/assets/icons/mail-icon';
+import { RequestDribbleIcon } from '@/assets/icons/request-dribble-icon';
+import { RequestBehanceIcon } from '@/assets/icons/request-behance-icon';
+import { SlackIcon } from '@/assets/icons/slack-icon';
+import { Button, InputWithLabel } from '@/components/ui';
+import { cn } from '@/lib/utils';
+import { InputVariants } from '@/components/ui/inputs/input.config';    
+import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+
 
 export default function InquiryForm() {
+    const {data:session}=useSession()
     const [selectedProject, setSelectedProject] = useState('Illustration');
     const [selectedBudget, setSelectedBudget] = useState('2000-5000 USD');
+    const [formData, setFormData] = useState({ email: '', name: '', message: '' });
+    const [file, setFile] = useState<any>(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
 
     const handleProjectChange = (project:any) => {
         setSelectedProject(project);
@@ -14,49 +32,99 @@ export default function InquiryForm() {
         setSelectedBudget(budget);
     };
 
-    const handleSubmit = (e:any) => {
-        e.preventDefault();
-        // Handle form submission logic here
+    const handleFileChange = (e:any) => {
+        const uploadedFile = e.target.files[0];
+        setFile(uploadedFile);
+
+        // Preview URL
+        if (uploadedFile) {
+            const url = URL.createObjectURL(uploadedFile);
+            setPreviewUrl(url);
+        }
     };
 
+    const removeFile = () => {
+        setFile(null);
+        setPreviewUrl(null);
+    };
+
+    const handleChange = (e:any) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e:any) => {
+        e.preventDefault();
+        
+        try {
+            const formDataToSend = {
+                email: formData.email,
+                name: formData.name,
+                message: formData.message,
+                projectType: selectedProject,
+                budget: selectedBudget,
+                userId: session?.user?.id || ""
+            };
+            
+            const response = await fetch('/api/request-project', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formDataToSend),
+            });
+        
+            if (response.ok) {
+                toast.success('Your request has been sent!');
+            } else {
+                toast.error('There was an error sending your request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error sending request:', error);
+            toast.error('There was an error sending your request. Please try again.');
+        }
+    };
+    
+    
+
     return (
-        <div className="flex flex-col md:flex-row min-h-screen items-center justify-center bg-gray-50 p-6 space-x-4 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row min-h-screen justify-center space-x-4 max-w-6xl mx-auto">
             {/* Contact Information Section */}
-            <div className="bg-white rounded-lg shadow-md p-6 w-full md:w-1/3 space-y-4 text-center md:text-left">
-                <img
-                    src="/images/person-dog-walking.svg" // Replace with actual image path
-                    alt="Illustration"
-                    className="w-3/4 mx-auto mb-4"
-                />
-                <p>Whatsapp: +8801723559106</p>
-                <p>Dhaka, Bangladesh</p>
-                <p>animoxostudio@gmail.com</p>
-                <div className="flex justify-center md:justify-start space-x-4 mt-4">
-                    {/* Social Icons */}
-                    <span className="text-blue-500">[FB Icon]</span>
-                    <span className="text-blue-500">[IG Icon]</span>
-                    <span className="text-blue-500">[Behance Icon]</span>
+            <div className="rounded-lg p-6 w-full md:w-1/3 space-y-4 text-center md:text-left h-fit">
+                <div className="bg-white py-20 px-10 rounded-2xl">
+                    <Image
+                        src={RequestProjectImage}
+                        alt="Illustration"
+                        className="w-3/4 mx-auto mb-4"
+                    />
+                </div>
+                <p className='text-sm font-extralight flex gap-3 items-center'><PhoneIcon /> Whatsapp: +8801723559106</p>
+                <p className='text-sm font-extralight flex gap-3 items-center'> <LocationIcon /> Dhaka, Bangladesh</p>
+                <p className='text-sm font-extralight flex gap-3 items-center'> <MailIcon /> animoxostudio@gmail.com</p>
+                <div className="flex justify-start md:justify-start gap-4 mt-4">
+                    <span className="text-blue-500"><SlackIcon /></span>
+                    <span className="text-blue-500"><RequestDribbleIcon /></span>
+                    <span className="text-blue-500"><RequestBehanceIcon /></span>
                 </div>
             </div>
 
             {/* Project Inquiry Form Section */}
-            <div className="bg-white rounded-lg shadow-md p-8 w-full md:w-2/3">
-                <h2 className="text-3xl font-semibold mb-2">Let&apos;s build an awesome project together.</h2>
+            <div className="rounded-lg p-3 w-full md:w-2/3">
+                <p className="text-4xl font-normal font-sans mb-2">Let&apos;s build an awesome <br /> project together.</p>
                 <p className="text-gray-600 mb-8">
-                    Describe your project and leave us your contact info, we&apos;ll get back to you within 24 hours.
+                    Describe your project and leave us your contact info, <br /> we&apos;ll get back to you within 24 hours.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Project Type */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-2">What is your project about?</h3>
+                        <h3 className="text-lg font-semibold mb-2 text-secondary-text">What is your project about?</h3>
                         <div className="flex flex-wrap gap-2">
                             {['Lottie', 'Rive', 'Illustration', 'Animation', 'Web Design', 'UI Design', 'Branding', 'Explainer Video'].map((project) => (
                                 <button
                                     key={project}
                                     type="button"
                                     onClick={() => handleProjectChange(project)}
-                                    className={`px-4 py-2 rounded-full border ${selectedProject === project ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500'}`}
+                                    className={`px-4 py-2 rounded-full border ${selectedProject === project ? 'border-brand text-brand' : 'border-gray-600 text-gray-600'}`}
                                 >
                                     {project}
                                 </button>
@@ -73,7 +141,7 @@ export default function InquiryForm() {
                                     key={budget}
                                     type="button"
                                     onClick={() => handleBudgetChange(budget)}
-                                    className={`px-4 py-2 rounded-full border ${selectedBudget === budget ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500'}`}
+                                    className={`px-4 py-2 rounded-full border ${selectedBudget === budget ? 'border-brand text-brand' : 'border-gray-600 text-gray-600'}`}
                                 >
                                     {budget}
                                 </button>
@@ -82,51 +150,72 @@ export default function InquiryForm() {
                     </div>
 
                     {/* Contact Fields */}
-                    <div className="flex flex-wrap gap-4">
-                        <input
-                            type="email"
+                    <div className="flex gap-4">
+                        <InputWithLabel
+                            label='Email'
                             name="email"
-                            placeholder="Email"
-                            required
-                            className="w-full md:w-1/2 border border-blue-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="email"
+                            placeholder="Jhonsmith@gmail.com"
+                            value={formData.email}
+                            onChange={handleChange}
                         />
-                        <input
-                            type="text"
+                        <InputWithLabel
+                            label='Name'
                             name="name"
-                            placeholder="Name"
-                            required
-                            className="w-full md:w-1/2 border border-blue-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="text"
+                            placeholder="Jhon Smith"
+                            value={formData.name}
+                            onChange={handleChange}
                         />
                     </div>
 
                     {/* Message Field */}
-                    <textarea
-                        name="message"
-                        placeholder="Your Message"
-                        rows={4}
-                        className="w-full border border-blue-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    ></textarea>
+                    <div className="relative w-full">
+                        <label className="absolute -top-3 left-4 px-1 bg-white text-secondary-text text-sm">
+                            Your Message
+                        </label>
+                        <textarea
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            className={cn(InputVariants())}
+                            rows={4}
+                        />
+                    </div>
 
-                    {/* File Attachment */}
-                    <div className="flex items-center space-x-2">
-                        <label className="text-blue-500 cursor-pointer">
-                            <input type="file" className="hidden" />
+                    {/* File Attachment with Preview */}
+                    <div className="flex items-center space-x-4">
+                        <label className="text-brand cursor-pointer">
+                            <input type="file" className="hidden" onChange={handleFileChange} />
                             <span>📎 Attach a file</span>
                         </label>
+                        {file && (
+                            <div className="flex items-center space-x-4">
+                                <div className="relative">
+                                    <Image src={previewUrl || ""} alt="Uploaded File" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+                                    <button
+                                        onClick={removeFile}
+                                        type="button"
+                                        className="absolute top-1 right-1 bg-gray-700 text-white rounded-full p-1 text-xs"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                                <p>{file.name}</p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Submit Button */}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                        Send Request
-                    </button>
-
-                    {/* Privacy Notice */}
-                    <p className="text-xs text-gray-500 mt-4">
-                        This site is protected by reCAPTCHA and the Google <a href="#" className="text-blue-500">Privacy Policy</a> and <a href="#" className="text-blue-500">Terms of Service</a> apply.
-                    </p>
+                    <div className="flex items-center justify-between text-light">
+                        <Button className="rounded-full" type="submit">
+                            Send Request
+                        </Button>
+                        <p className="text-sm text-gray-500">
+                            This site is protected by reCAPTCHA and the Google <br />
+                            <a href="#" className="text-blue-500">Privacy Policy</a> and <a href="#" className="text-blue-500">Terms of Service</a> apply.
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>
