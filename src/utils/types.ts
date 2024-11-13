@@ -1,3 +1,5 @@
+import { ProjectType } from "@prisma/client"
+
 export interface IIconFormData {
   iconStyle: string
   license: string
@@ -30,4 +32,14 @@ export interface IPackFiles {
   animationFile: File[] | null
   featureImageFiles: File[] | null
   productViewImageFiles: File[] | null
+}
+
+export interface IRequestProjectFormData {
+  userId: string
+  email: string
+  name: string
+  message: string
+  projectType: string
+  budget: string
+  attachmentUrl: string
 }
