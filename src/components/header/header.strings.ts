@@ -33,7 +33,7 @@ export const headerList: HeaderListsType = (setShowProductMenu) => [
   {
     label: "Request a Project",
     attributes: {
-      href: "/request",
+      href: "/request-project",
       className: "!rounded-full hover:border-brand !py-2 !font-normal",
       size: "lg",
       variant: "ghost",

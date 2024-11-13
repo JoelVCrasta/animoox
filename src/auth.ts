@@ -70,6 +70,9 @@ export const {
                 // @ts-ignore
                 session.user.email = token.email;
                 session.user.isOAuth = token.isOAuth as boolean;
+                session.user.firstName = token.firstName;
+                session.user.lastName = token.lastName;
+                session.user.displayName = token.displayName;
             }
 
             return session;
@@ -90,6 +93,9 @@ export const {
             token.email = existingUser.email;
             token.role = existingUser.role;
             token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+            token.firstName = existingUser.firstName;
+            token.lastName = existingUser.lastName;
+            token.displayName = existingUser.displayName;
 
             return token;
         }
