@@ -46,3 +46,22 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/products";
+
+/**
+ * An array of routes that are accessible only to admin users
+ * These routes require authentication and admin privileges
+ * @type {string[]}
+ */
+export const adminRoutes = [
+    "/admin",
+    "/admin/add-icon",
+    "/admin/add-pack",
+    "/admin/orders",
+    "/admin/products",
+    "/admin/users",
+    "/api/add-icon",
+    "/api/add-pack",
+    "/api/orders",
+    "/api/product-management",
+    "/api/users"
+];
