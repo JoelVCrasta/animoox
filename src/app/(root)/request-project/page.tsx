@@ -13,7 +13,7 @@ import { Button, InputWithLabel } from "@/components/ui"
 import { cn } from "@/lib/utils"
 import { InputVariants } from "@/components/ui/inputs/input.config"
 import { useSession } from "next-auth/react"
-import toast, { Toaster } from "react-hot-toast"
+import { toast } from "sonner"
 import { IRequestProjectFormData } from "@/utils/types"
 import { validateRequestProject } from "@/utils/validateForm"
 import { fileUpload } from "@/actions/s3Upload"
@@ -130,7 +130,6 @@ export default function InquiryForm() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen justify-center space-x-4 max-w-6xl mx-auto">
-      <Toaster />
       {/* Contact Information Section */}
       <div className="rounded-lg p-6 w-full md:w-1/3 space-y-4 text-center md:text-left h-fit">
         <div className="bg-white py-20 px-10 rounded-2xl">
