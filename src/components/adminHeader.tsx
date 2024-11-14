@@ -29,6 +29,9 @@ const AdminHeader = () => {
   if (pathSegment === "product-management") {
     title = "Product Management";
   }
+  if (pathSegment === "order-management") {
+    title = "Order Management";
+  }
 
   return (
     <div className="flex flex-row justify-between items-center pt-8 w-full px-10">

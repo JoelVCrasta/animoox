@@ -51,7 +51,7 @@ export const Header = (): JSX.Element => {
                 onClick={()=>setShowAuthMenu(p=>!p)}
               >
                 <ProfileIcon />
-                <p className="text-brand">{session.user.displayName!==null?session.user.displayName:session.user.name}</p>
+                <p className="text-brand">{session?.user?.displayName!==null?session?.user?.displayName:session?.user?.name}</p>
                 <div className="" >
                   <HeaderDropdownIcon />
                 </div>

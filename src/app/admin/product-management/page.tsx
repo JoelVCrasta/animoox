@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {fetchProducts} from "../../_apiEndpoint/endpoint"
+import {fetchProducts} from "../../_api-end-point/endpoint"
 import toast, { Toaster } from "react-hot-toast";
-import Table from "../_components/table";
-import TableTraffic from "../_components/tableTrafficSource";
+import Table from "../_components/table-all-product";
+import TableTraffic from "../_components/table-traffic-source";
 import Iphone from "../../../assets/images/iphone.png";
 
 const ProductManagement = () => {
