@@ -11,7 +11,7 @@ const ProductManagement = () => {
   const [isAllProduct, setIsAllProduct] = useState(true);
   // const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
-  const data = [
+  const datadummy = [
     {
       productName: "iPhone 16 Pro",
       category: "Smart Phone",
@@ -214,6 +214,29 @@ const ProductManagement = () => {
     },
   ];
 
+  const columns = [
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "role",
+      header: "Role",
+    }
+  ];
+  
+  const data = [
+    {
+      name: "John Doe",
+      email: "john@example.com",
+      role: "Admin"
+    },
+  ];
+
   useEffect(() => {
     async function loadProducts() {
       try {
@@ -261,7 +284,7 @@ const ProductManagement = () => {
           </div>
         </div>
         {isAllProduct ? (
-          <Table data={data} />
+          <Table />
         ) : (
           <TableTraffic dataTraffic={dataTraffic} />
         )}

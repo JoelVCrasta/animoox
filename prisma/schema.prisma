@@ -118,6 +118,7 @@ model Product {
   category             String
   title                String
   description          String
+  pageView String?
   smallDescription     String?
   animationCount       Int?
   buttonText           String
