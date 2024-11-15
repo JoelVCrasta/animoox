@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FiPlus } from "react-icons/fi";
 import { CiFilter } from "react-icons/ci";
 import { Pencil, Trash2, Copy } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import {DatePickerWithRange} from "./date-picker"
 import ProductCell from "../_components/product-cell";
 import {
   ColumnDef,
@@ -28,15 +28,6 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -376,6 +367,7 @@ const DataTable = () => {
   return (
     <div className="w-full bg-white p-6 rounded-lg shadow mt-8">
       <div className="flex flex-col gap-4">
+      <h3 className="text-[#2C2F50] text-lg font-semibold">Product List</h3>
         <div className="flex items-center justify-between">
           <div>
             <Input
@@ -389,6 +381,7 @@ const DataTable = () => {
                   .getColumn("productName")
                   ?.setFilterValue(event.target.value)
               }
+              style={{width:"350px"}}
               className="max-w-sm"
             />
           </div>
@@ -396,6 +389,7 @@ const DataTable = () => {
           <div className="flex items-center justify-between mb-5">
             
             <div className="flex items-center gap-2.5">
+              <DatePickerWithRange/>
               <button className="flex items-center justify-center gap-[5px] cursor-pointer bg-[#2C2F50] text-white px-5 py-2.5 rounded-[40px]">
                 <CiFilter className="text-lg" />
                 <span>Filter By</span>
@@ -403,7 +397,7 @@ const DataTable = () => {
               <Link href="/admin/add-pack">
                 <button className="flex items-center justify-center gap-[5px] cursor-pointer bg-[#4F73FF] text-white px-5 py-2.5 rounded-[40px]">
                   <FiPlus className="text-lg" />
-                  <span>New New Post</span>
+                  <span>New Product</span>
                 </button>
               </Link>
             </div>

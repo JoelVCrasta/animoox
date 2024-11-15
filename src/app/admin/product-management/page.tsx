@@ -11,116 +11,7 @@ const ProductManagement = () => {
   const [isAllProduct, setIsAllProduct] = useState(true);
   // const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
-  const datadummy = [
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-  ];
+  
   const dataTraffic = [
     {
       productName: "iPhone 16 Pro",
@@ -214,28 +105,6 @@ const ProductManagement = () => {
     },
   ];
 
-  const columns = [
-    {
-      accessorKey: "name",
-      header: "Name",
-    },
-    {
-      accessorKey: "email",
-      header: "Email",
-    },
-    {
-      accessorKey: "role",
-      header: "Role",
-    }
-  ];
-  
-  const data = [
-    {
-      name: "John Doe",
-      email: "john@example.com",
-      role: "Admin"
-    },
-  ];
 
   useEffect(() => {
     async function loadProducts() {
@@ -254,7 +123,7 @@ const ProductManagement = () => {
     loadProducts();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div></div>;
 
   return (
     <section className="flex">
