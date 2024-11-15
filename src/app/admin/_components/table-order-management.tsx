@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { ArrowUpDown, ChevronFirst, ChevronLast } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -79,6 +79,26 @@ const DataTable = ({ data, onDataChange }: DataTableProps) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+      setDeleteDialogOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (deleteDialogOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [deleteDialogOpen]);
 
   const columns: ColumnDef<Order>[] = [
     {
@@ -450,8 +470,11 @@ const DataTable = ({ data, onDataChange }: DataTableProps) => {
           </div>
         </div>
       </div>
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="bg-white">
+      <AlertDialog
+        open={deleteDialogOpen}
+        onOpenChange={(isOpen) => setDeleteDialogOpen(isOpen)}
+      >
+        <AlertDialogContent className="bg-white" ref={dialogRef}>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
