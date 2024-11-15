@@ -11,7 +11,7 @@ interface ProtectedLayoutProps {
 export default async function ProtectedLayout ({ children }: ProtectedLayoutProps){
     const session = await auth();
     return (
-        <div className="flex bg-indigo-50" style={{width:'100vw'}}>
+        <div className="flex bg-indigo-50" style={{width:'100%'}}>
             <SessionProvider session={session}>
             <div className="bg-white py-5 " style={{width:'18%'}}><Sidebar /></div>
             <div style={{width:'82%'}}>

@@ -4,26 +4,30 @@ import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Table from "../_components/table-order-management";
 
+interface Order {
+  id: string;
+  name: string;
+  email: string;
+  budget: string;
+  status: string;
+  trafficSource: string;
+  createdAt: string;
+}
+
 const OrderManagement = () => {
-  type Order = {
-    id: string;
-    name: string;
-    email: string;
-    budget: string;
-    status: string;
-    trafficSource: string;
-    createdAt: string;
-  };
   const [data, setData] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
-  async function fetchProductsFromAPI(productId?: string): Promise<Order[]> {
+  async function fetchProductsFromAPI(): Promise<Order[]> {
     const url = "/api/order";
     const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to fetch products");
     return res.json();
   }
+
+  const handleDataChange = (newData: Order[]) => {
+    setData(newData);
+  };
 
   useEffect(() => {
     async function loadProducts() {
@@ -58,9 +62,11 @@ const OrderManagement = () => {
   return (
     <section className="flex">
       <Toaster />
-
       <div className="w-full p-4 md:py-4 md:px-8">
-        <Table data={data} />
+        <Table 
+          data={data} 
+          onDataChange={handleDataChange}
+        />
       </div>
     </section>
   );
