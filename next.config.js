@@ -5,6 +5,7 @@ const nextConfig = {
     },
     images: {
         domains: ['res.cloudinary.com'],
+        domains: ['example.com'],
     },
 }
 

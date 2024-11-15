@@ -1,17 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {fetchProducts} from "../../_api-end-point/endpoint"
 import toast, { Toaster } from "react-hot-toast";
 import Table from "../_components/table-all-product";
 import TableTraffic from "../_components/table-traffic-source";
 import Iphone from "../../../assets/images/iphone.png";
 
 const ProductManagement = () => {
+  interface Product {
+    id: string;
+    productId: string;
+    type: string;
+    pack: string;
+    typeSmallDescription: string;
+    price: number;
+    tag: string;
+    category: string;
+    title: string;
+    description: string;
+    pageView: string;
+    smallDescription: string;
+    animationCount: number;
+    buttonText: string;
+    files: string[];
+    compatibility: string[];
+    highlights: string[];
+    createdAt: string;
+    updatedAt: string;
+  }
   const [isAllProduct, setIsAllProduct] = useState(true);
-  // const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
-  
+  const [data, setData] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const dataTraffic = [
     {
       productName: "iPhone 16 Pro",
@@ -105,14 +125,19 @@ const ProductManagement = () => {
     },
   ];
 
+  async function fetchProductsFromAPI(productId?: string): Promise<Product[]> {
+    const url = productId ? `/api/product?productId=${productId}` : "/api/product";
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to fetch products");
+    return res.json();
+  }
 
   useEffect(() => {
     async function loadProducts() {
       try {
         setIsLoading(true);
-        const products = await fetchProducts();
-        console.log(products,"products")
-        // setData(products)
+        const products = await fetchProductsFromAPI();
+        setData(products)
       } catch (error) {
         toast.error("Failed to load products.");
         console.error("Error loading products:", error);
@@ -120,10 +145,9 @@ const ProductManagement = () => {
         setIsLoading(false);
       }
     }
+
     loadProducts();
   }, []);
-
-  if (isLoading) return <div></div>;
 
   return (
     <section className="flex">
@@ -152,11 +176,7 @@ const ProductManagement = () => {
             Traffic source
           </div>
         </div>
-        {isAllProduct ? (
-          <Table />
-        ) : (
-          <TableTraffic dataTraffic={dataTraffic} />
-        )}
+        {isAllProduct ? <Table data={data}/> : <TableTraffic dataTraffic={dataTraffic} />}
       </div>
     </section>
   );

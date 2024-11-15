@@ -1,11 +1,9 @@
-"use client";
-
-import * as React from "react";
+import React from "react";
 import Link from "next/link";
 import { FiPlus } from "react-icons/fi";
 import { CiFilter } from "react-icons/ci";
 import { Pencil, Trash2, Copy } from "lucide-react";
-import {DatePickerWithRange} from "./date-picker"
+import { DatePickerWithRange } from "./date-picker";
 import ProductCell from "../_components/product-cell";
 import {
   ColumnDef,
@@ -46,297 +44,28 @@ import {
 } from "@/components/ui/select";
 
 type Product = {
-  productName: string;
+  id: string;
+  productId: string;
+  type: string;
+  pack: string;
+  typeSmallDescription: string;
+  price: number;
+  tag: string;
   category: string;
-  src?: string;
-  status: number;
-  price: string;
-  pageViews: string;
-  increment: boolean;
+  title: string;
+  description: string;
+  pageView: string;
+  smallDescription: string;
+  animationCount: number;
+  buttonText: string;
+  files: string[];
+  compatibility: string[];
+  highlights: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
-const data: Product[] = [
-  {
-    productName: "iPhone 16 Pro",
-    category: "Smart Phone",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-  {
-    productName: "MacBook Pro",
-    category: "Laptop, Notebook",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1500.5K",
-    increment: false,
-  },
-  {
-    productName: "Apple Watch 10",
-    category: "Smart Watch",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 0,
-    price: "$2099",
-    pageViews: "200.47K",
-    increment: true,
-  },
-  {
-    productName: "Amd Ryzen 9",
-    category: "Processor",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 2,
-    price: "$999.99",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-  {
-    productName: "iPhone 16 Pro",
-    category: "Smart Phone",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-  {
-    productName: "MacBook Pro",
-    category: "Laptop, Notebook",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1500.5K",
-    increment: false,
-  },
-  {
-    productName: "Apple Watch 10",
-    category: "Smart Watch",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 0,
-    price: "$2099",
-    pageViews: "200.47K",
-    increment: true,
-  },
-  {
-    productName: "Amd Ryzen 9",
-    category: "Processor",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 2,
-    price: "$999.99",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-  {
-    productName: "iPhone 16 Pro",
-    category: "Smart Phone",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-  {
-    productName: "MacBook Pro",
-    category: "Laptop, Notebook",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 1,
-    price: "$1099",
-    pageViews: "1500.5K",
-    increment: false,
-  },
-  {
-    productName: "Apple Watch 10",
-    category: "Smart Watch",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 0,
-    price: "$2099",
-    pageViews: "200.47K",
-    increment: true,
-  },
-  {
-    productName: "Amd Ryzen 9",
-    category: "Processor",
-    src: "https://res.cloudinary.com/dhlsvwpny/image/upload/v1731668101/iphone_ezxxoe.png",
-    status: 2,
-    price: "$999.99",
-    pageViews: "1475.5K",
-    increment: true,
-  },
-];
-
-const columns: ColumnDef<Product>[] = [
-  {
-    accessorKey: "productName",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Product Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <ProductCell
-        imageUrl={row.original.src}
-        productName={row.original.productName}
-      />
-    ),
-  },
-  {
-    accessorKey: "category",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const status = row.getValue("status") as number;
-      return (
-        <div
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-          ${
-            status === 0
-              ? "bg-[#FFECE9] text-[#FF4326] border border-[#FF4326]"
-              : status === 1
-              ? "bg-[#F3FBEA] text-[#89D62A] border border-[#89D62A]"
-              : "bg-[#FFF9EC] text-[#FFC13D] border border-[#FFC13D]"
-          }`}
-        >
-          {status === 0 ? "Rejected" : status === 1 ? "Active" : "Pending"}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("price")}</div>
-    ),
-  },
-  {
-    accessorKey: "pageViews",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Page Views
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const increment = row.original.increment;
-      return (
-        <div className="flex items-center justify-center gap-2">
-          {row.getValue("pageViews")}
-          {increment ? (
-            <svg
-              className="w-4 h-4 text-green-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 10l7-7m0 0l7 7m-7-7v18"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="w-4 h-4 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          )}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "actions",
-    header: "Actions", // Static header without sorting functionality
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center space-x-2">
-          {/* Edit Icon */}
-          <button
-            onClick={() => console.log("Edit", row.original)}
-            className="text-blue-500 hover:text-blue-700"
-            title="Edit"
-          >
-            <Pencil className="h-4 w-4" />
-          </button>
-          {/* Delete Icon */}
-          <button
-            onClick={() => console.log("Delete", row.original)}
-            className="text-red-500 hover:text-red-700"
-            title="Delete"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-          {/* Copy Icon */}
-          <button
-            onClick={() => console.log("Copy", row.original)}
-            className="text-gray-500 hover:text-gray-700"
-            title="Copy"
-          >
-            <Copy className="h-4 w-4" />
-          </button>
-        </div>
-      );
-    },
-  },
-];
-
-const DataTable = () => {
+const DataTable = ({ data }: { data: Product[] }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -344,6 +73,140 @@ const DataTable = () => {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const columns: ColumnDef<Product>[] = [
+    {
+      accessorKey: "title",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Product Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <ProductCell
+          imageUrl={row.original.files[0]}
+          productName={row.original.title}
+        />
+      ),
+    },
+    {
+      accessorKey: "category",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Category
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+    },
+    {
+      accessorKey: "tag",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Tag
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+          ${
+            row.original.tag === "New!"
+              ? "bg-[#FFECE9] text-[#FF4326] border border-[#FF4326]"
+              : row.original.tag === "Best Seller"
+              ? "bg-[#F3FBEA] text-[#89D62A] border border-[#89D62A]"
+              : "bg-[#FFF9EC] text-[#FFC13D] border border-[#FFC13D]"
+          }`}
+        >
+          {row.original.tag}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "price",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Price
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-center">${row.original.price.toFixed(2)}</div>
+      ),
+    },
+    {
+      accessorKey: "pageView",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Page View
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center justify-center">
+            {row.original.pageView}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => console.log("Edit", row.original)}
+              className="text-blue-500 hover:text-blue-700"
+              title="Edit"
+            >
+              <Pencil className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => console.log("Delete", row.original)}
+              className="text-red-500 hover:text-red-700"
+              title="Delete"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => console.log("Copy", row.original)}
+              className="text-gray-500 hover:text-gray-700"
+              title="Copy"
+            >
+              <Copy className="h-4 w-4" />
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
 
   const table = useReactTable({
     data,
@@ -367,29 +230,24 @@ const DataTable = () => {
   return (
     <div className="w-full bg-white p-6 rounded-lg shadow mt-8">
       <div className="flex flex-col gap-4">
-      <h3 className="text-[#2C2F50] text-lg font-semibold">Product List</h3>
+        <h3 className="text-[#2C2F50] text-lg font-semibold">Product List</h3>
         <div className="flex items-center justify-between">
           <div>
             <Input
               placeholder="Search product"
               value={
-                (table.getColumn("productName")?.getFilterValue() as string) ??
-                ""
+                (table.getColumn("title")?.getFilterValue() as string) || ""
               }
               onChange={(event) =>
-                table
-                  .getColumn("productName")
-                  ?.setFilterValue(event.target.value)
+                table.getColumn("title")?.setFilterValue(event.target.value)
               }
-              style={{width:"350px"}}
+              style={{ width: "350px" }}
               className="max-w-sm"
             />
           </div>
-          {/* Here */}
           <div className="flex items-center justify-between mb-5">
-            
             <div className="flex items-center gap-2.5">
-              <DatePickerWithRange/>
+              <DatePickerWithRange />
               <button className="flex items-center justify-center gap-[5px] cursor-pointer bg-[#2C2F50] text-white px-5 py-2.5 rounded-[40px]">
                 <CiFilter className="text-lg" />
                 <span>Filter By</span>
@@ -411,7 +269,10 @@ const DataTable = () => {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="px-4 py-2 text-left">
+                    <TableHead
+                      key={header.id}
+                      className="px-4 py-2 text-left"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -433,7 +294,10 @@ const DataTable = () => {
                   className="border-b hover:bg-gray-50"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-4 py-4 text-left">
+                    <TableCell
+                      key={cell.id}
+                      className="px-4 py-4 text-left"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

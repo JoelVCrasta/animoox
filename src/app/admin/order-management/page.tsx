@@ -3,139 +3,57 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Table from "../_components/table-order-management";
-import Iphone from "../../../assets/images/iphone.png";
 
-const ProductManagement = () => {
-  // const [data, setData] = useState([]);
+const OrderManagement = () => {
+  type Order = {
+    id: string;
+    name: string;
+    email: string;
+    budget: string;
+    status: string;
+    trafficSource: string;
+    createdAt: string;
+  };
+  const [data, setData] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const data = [
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "iPhone 16 Pro",
-      category: "Smart Phone",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-    {
-      productName: "MacBook Pro",
-      category: "Laptop, Notebook",
-      src: Iphone,
-      status: 1,
-      price: "$1099",
-      pageViews: "1500.5K",
-      increment: false,
-    },
-    {
-      productName: "Apple Watch 10",
-      category: "Smart Watch",
-      src: Iphone,
-      status: 0,
-      price: "$2099",
-      pageViews: "200.47K",
-      increment: true,
-    },
-    {
-      productName: "Amd Ryzen 9",
-      category: "Processor",
-      src: Iphone,
-      status: 2,
-      price: "$999.99",
-      pageViews: "1475.5K",
-      increment: true,
-    },
-  ];
 
-  //   useEffect(() => {
-  //     async function loadProducts() {
-  //       try {
-  //         setIsLoading(true);
-  //         const products = await fetchProducts();
-  //         console.log(products,"products")
-  //       } catch (error) {
-  //         toast.error("Failed to load products.");
-  //         console.error("Error loading products:", error);
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-  //     loadProducts();
-  //   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  async function fetchProductsFromAPI(productId?: string): Promise<Order[]> {
+    const url = "/api/order";
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to fetch products");
+    return res.json();
+  }
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        setIsLoading(true);
+        const order = await fetchProductsFromAPI();
+        console.log(order, "order");
+  
+        // Transform the data to match the expected Order type
+        const orders: Order[] = order.map((product: Order) => ({
+          id: product.id,
+          name: product.name,
+          email: product.email,
+          budget: product.budget,
+          status: product.status,
+          trafficSource: product.trafficSource,
+          createdAt: product.createdAt
+        }));
+  
+        setData(orders);
+      } catch (error) {
+        toast.error("Failed to load products.");
+        console.error("Error loading products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  
+    loadProducts();
+  }, []);
 
   return (
     <section className="flex">
@@ -148,4 +66,4 @@ const ProductManagement = () => {
   );
 };
 
-export default ProductManagement;
+export default OrderManagement;

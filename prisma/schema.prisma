@@ -119,6 +119,7 @@ model Product {
   title                String
   description          String
   pageView String?
+  status String?
   smallDescription     String?
   animationCount       Int?
   buttonText           String
@@ -182,6 +183,8 @@ model Order {
   name          String
   email         String
   message       String
+  status        String @default("ordered")
+  trafficSource String @default("application")
   projectType   ProjectType
   budget        String
   attachmentUrl String?  // URL to the uploaded file (e.g., AWS S3, Cloudinary)
