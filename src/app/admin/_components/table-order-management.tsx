@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Copy } from "lucide-react";
 import { DatePickerWithRange } from "./date-picker";
 import { CiFilter } from "react-icons/ci";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -32,7 +33,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { format, parseISO, isWithinInterval, addDays,subYears } from "date-fns";
+import {
+  format,
+  parseISO,
+  isWithinInterval,
+  addDays,
+  subYears,
+} from "date-fns";
 import { DateRange } from "react-day-picker";
 
 interface Order {
@@ -162,16 +169,19 @@ const DataTable = ({ data }: DataTableProps) => {
           <Button
             variant="ghost"
             size="sm"
-            style={{padding:"0"}}
+            style={{ padding: "0" }}
             className="text-blue-500 hover:text-blue-700"
-            onClick={() => console.log("Edit", row.original)}
+            onClick={() => {
+              toast.warning("Under development");
+            }}
+            // onClick={() => console.log("Edit", row.original)}
           >
             <Pencil className="h-4 w-4" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            style={{padding:"0"}}
+            style={{ padding: "0" }}
             className="text-red-500 hover:text-red-700"
             onClick={() => console.log("Delete", row.original)}
           >
@@ -180,9 +190,16 @@ const DataTable = ({ data }: DataTableProps) => {
           <Button
             variant="ghost"
             size="sm"
-            style={{padding:"0"}}
+            style={{ padding: "0" }}
             className="text-gray-500 hover:text-gray-700"
-            onClick={() => console.log("Copy", row.original)}
+            onClick={() => {
+              navigator.clipboard
+                .writeText(row.original.id)
+                .then(() =>
+                  toast.success(`Copied to clipboard: ${row.original.id}`)
+                )
+                .catch((err) => console.error("Failed to copy text:", err));
+            }}
           >
             <Copy className="h-4 w-4" />
           </Button>
@@ -250,6 +267,9 @@ const DataTable = ({ data }: DataTableProps) => {
             />
             <Button
               className="flex items-center justify-center gap-[5px] bg-[#2C2F50] text-white px-5 py-2.5 rounded-[40px]"
+              onClick={() => {
+                toast.warning("Under development");
+              }}
             >
               <CiFilter className="text-lg" />
               <span>Filter By</span>
@@ -313,17 +333,22 @@ const DataTable = ({ data }: DataTableProps) => {
               table.setPageSize(Number(value));
             }}
           >
-            <SelectTrigger className="h-8 w-[70px]">
+            <SelectTrigger className="h-8 w-[70px] bg-white">
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
-            <SelectContent side="top">
+            <SelectContent side="top" className="bg-white">
               {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
+                <SelectItem
+                  key={pageSize}
+                  value={`${pageSize}`}
+                  className="hover:bg-gray-100"
+                >
                   {pageSize}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+
           <div className="flex-1 text-sm text-muted-foreground">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
             {table.getFilteredRowModel().rows.length} row(s) selected.
