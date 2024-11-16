@@ -1,8 +1,66 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { RxUpload } from "react-icons/rx";
-import PricingCard from "./priceing-card";
+import PricingCard from "./pricing-card";
+
+interface PricingPlan {
+  id: string;
+  type: string;
+  price: number;
+  save: number;
+  duration: string;
+  discount: number;
+  description: string;
+  features: string[];
+}
 
 const Price = () => {
+  const [data, setData] = useState<PricingPlan[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  async function getPricingPlans(): Promise<PricingPlan[]> {
+    const response = await fetch("/api/pricing");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data; // Remove the extra .json() call
+  }
+
+  const getData = async () => {
+    try {
+      setIsLoading(true);
+      const pricing = await getPricingPlans();
+      setData(pricing);
+    } catch (err) {
+      console.error(err);
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch pricing data"
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // Find pricing plan by type
+  const getPlanByType = (type: string) => {
+    return data.find((plan) => plan.type.toLowerCase() === type.toLowerCase());
+  };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="w-full bg-white p-6 rounded-lg shadow mt-8">
@@ -27,9 +85,9 @@ const Price = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-6">
-          <PricingCard title="Basic" />
-          <PricingCard title="Premium" />
-          <PricingCard title="Team" />
+          <PricingCard title="Basic" initialData={getPlanByType("Basic")} />
+          <PricingCard title="Premium" initialData={getPlanByType("Premium")} />
+          <PricingCard title="Team" initialData={getPlanByType("Team")} />
         </div>
       </div>
     </>

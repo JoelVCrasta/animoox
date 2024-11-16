@@ -1,23 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RxUpload } from 'react-icons/rx';
 import { Plus, X, Percent } from 'lucide-react';
+import {toast} from "sonner"
 
 interface PricingCardProps {
   title: string;
   initialSavePercent?: number;
+  initialData?: PricingPlan;
 }
 
-const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent }) => {
+interface PricingPlan {
+  type: string;
+  price: number;
+  save: number;
+  duration: string;
+  discount: number;
+  description: string;
+  features: string[];
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+
+const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, initialData }) => {
   const [mainPrice, setMainPrice] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [duration, setDuration] = useState<'Annual' | 'Monthly' | 'Quarterly'>('Annual');
-  const [savePercent, setSavePercent] = useState<string>();
+  const [savePercent, setSavePercent] = useState<string>(initialSavePercent?.toString() || '0');
   const [isEditingSave, setIsEditingSave] = useState(false);
-  const [features, setFeatures] = useState<string[]>([
-  ]);
+  const [features, setFeatures] = useState<string[]>([]);
   const [newFeature, setNewFeature] = useState<string>('');
   const [isAddingFeature, setIsAddingFeature] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (initialData) {
+      setMainPrice(initialData.price.toString());
+      setPrice(initialData.discount.toString());
+      setDescription(initialData.description);
+      setDuration(initialData.duration as 'Annual' | 'Monthly' | 'Quarterly');
+      setSavePercent(initialData.save.toString());
+      setFeatures(initialData.features);
+    }
+  }, [initialData]);
+  
 
   const handleAddFeature = () => {
     if (newFeature.trim()) {
@@ -45,8 +75,71 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent }) 
     }
   };
 
+  
+  
+  async function createPricingPlan(plan: PricingPlan): Promise<ApiResponse<PricingPlan>> {
+    try {
+      const response = await fetch('/api/pricing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(plan),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'An unknown error occurred',
+      };
+    }
+  }
+
+  const handleSubmit = async () => {
+    if (!mainPrice || !price || !description) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const planData: PricingPlan = {
+        type: title,
+        price: parseFloat(mainPrice),
+        save: parseInt(savePercent),
+        duration: duration,
+        discount: parseFloat(price),
+        description: description,
+        features: features
+      };
+
+      const response = await createPricingPlan(planData);
+      
+      if (response.success && response.data) {
+        toast.success("Price save successfully")
+      } else {
+        alert(`Error creating plan: ${response.error}`);
+      }
+    } catch (error) {
+      alert('An error occurred while creating the plan');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm flex-1">
+    <div className="bg-white p-6 rounded-lg shadow-sm flex-1" style={{boxShadow:"0px 20px 60px 0px rgba(29, 29, 29, 0.07)"}}>
       <div className="flex justify-between items-center mb-4">
         <h4 className="text-[#2C2F50] font-medium">{title}</h4>
         <div 
@@ -84,7 +177,8 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent }) 
           <input
             type="text"
             placeholder='0.00'
-            className="text-4xl font-bold text-[#2C2F50] w-24 focus:outline-none focus:border-b-2 focus:border-blue-500"
+            style={{minWidth:"100px"}}
+            className="text-4xl font-bold text-[#2C2F50] focus:outline-none focus:border-b-2 focus:border-blue-500"
             value={mainPrice}
             onChange={(e) => {
               const value = e.target.value.replace(/[^0-9.]/g, '');
@@ -132,8 +226,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent }) 
           <div className="text-xs text-gray-400 text-right mt-1">90 Characters</div>
         </div>
 
-        <button className="w-full bg-[#4F73FF] text-white py-3 rounded-lg font-medium">
-          GET STARTED
+        <button 
+          onClick={handleSubmit} 
+          disabled={isSubmitting}
+          className="w-full bg-[#4F73FF] text-white py-3 rounded-lg font-medium disabled:bg-opacity-70"
+        >
+          {isSubmitting ? 'SUBMITTING...' : 'GET STARTED'}
         </button>
 
         <div className="space-y-3 mt-4">

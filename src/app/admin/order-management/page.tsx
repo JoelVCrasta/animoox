@@ -34,7 +34,7 @@ const OrderManagement = () => {
       try {
         setIsLoading(true);
         const order = await fetchProductsFromAPI();
-        console.log(order, "order");
+        // console.log(order, "order");
   
         // Transform the data to match the expected Order type
         const orders: Order[] = order.map((product: Order) => ({
