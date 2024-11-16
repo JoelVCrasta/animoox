@@ -9,6 +9,7 @@ interface PricingPlan {
   duration: string;
   description: string;
   features: string[];
+  status: string;
 }
 
 export async function POST(request: Request) {
@@ -23,8 +24,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    const existingPlan = await db.pricing.findFirst({
+    const existingPlan = await db.pricing.findUnique({
       where: {
         type: body.type,
       },
@@ -44,6 +44,7 @@ export async function POST(request: Request) {
           duration: body.duration,
           description: body.description,
           features: body.features,
+          status: body.status,
           updatedAt: new Date(),
         },
       });
@@ -62,6 +63,7 @@ export async function POST(request: Request) {
           duration: body.duration,
           description: body.description,
           features: body.features,
+          status: body.status || "active",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -77,6 +79,10 @@ export async function POST(request: Request) {
     }
   } catch (error) {
     console.error("Error in pricing plan API:", error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

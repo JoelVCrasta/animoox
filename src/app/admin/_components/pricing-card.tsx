@@ -7,6 +7,8 @@ interface PricingCardProps {
   title: string;
   initialSavePercent?: number;
   initialData?: PricingPlan;
+  onFormDataChange: (type: string, formData: PricingFormData) => void;
+  onStatusUpdate: (type: string, status: string) => void;
 }
 
 interface PricingPlan {
@@ -17,6 +19,16 @@ interface PricingPlan {
   discount: number;
   description: string;
   features: string[];
+  status: string;
+}
+
+interface PricingFormData {
+  mainPrice: string;
+  price: string;
+  description: string;
+  duration: 'Annual' | 'Monthly' | 'Quarterly';
+  savePercent: string;
+  features: string[];
 }
 
 interface ApiResponse<T> {
@@ -25,7 +37,7 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, initialData }) => {
+const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, initialData, onStatusUpdate, onFormDataChange,}) => {
   const [mainPrice, setMainPrice] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -48,17 +60,31 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, in
     }
   }, [initialData]);
   
+  useEffect(() => {
+    const formData: PricingFormData = {
+      mainPrice,
+      price,
+      description,
+      duration,
+      savePercent,
+      features
+    };
+    onFormDataChange(title, formData);
+  }, [mainPrice, price, description, duration, savePercent, features, title, onFormDataChange]);
+
 
   const handleAddFeature = () => {
     if (newFeature.trim()) {
-      setFeatures([...features, newFeature.trim()]);
+      const updatedFeatures = [...features, newFeature.trim()];
+      setFeatures(updatedFeatures);
       setNewFeature('');
       setIsAddingFeature(false);
     }
   };
 
   const handleRemoveFeature = (index: number) => {
-    setFeatures(features.filter((_, i) => i !== index));
+    const updatedFeatures = features.filter((_, i) => i !== index);
+    setFeatures(updatedFeatures);
   };
 
   const handleSavePercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +101,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, in
     }
   };
 
+  
   
   
   async function createPricingPlan(plan: PricingPlan): Promise<ApiResponse<PricingPlan>> {
@@ -106,7 +133,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, in
 
   const handleSubmit = async () => {
     if (!mainPrice || !price || !description) {
-      alert('Please fill in all required fields');
+      toast.error('Please fill in all required fields');
       return;
     }
 
@@ -119,13 +146,15 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, initialSavePercent, in
         duration: duration,
         discount: parseFloat(price),
         description: description,
-        features: features
+        features: features,
+        status: status
       };
 
       const response = await createPricingPlan(planData);
       
       if (response.success && response.data) {
-        toast.success("Price save successfully")
+        toast.success(`Price ${status === "draft" ? "saved as draft" : "saved"} successfully`);
+        onStatusUpdate(title, status);
       } else {
         alert(`Error creating plan: ${response.error}`);
       }
