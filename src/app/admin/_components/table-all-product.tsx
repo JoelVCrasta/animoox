@@ -247,7 +247,7 @@ const DataTable = ({ data }: { data: Product[] }) => {
           </div>
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2.5">
-              <DatePickerWithRange />
+              {/* <DatePickerWithRange /> */}
               <button className="flex items-center justify-center gap-[5px] cursor-pointer bg-[#2C2F50] text-white px-5 py-2.5 rounded-[40px]">
                 <CiFilter className="text-lg" />
                 <span>Filter By</span>
