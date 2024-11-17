@@ -8,16 +8,16 @@ import { fileUpload } from "@/lib/s3Upload"
 import toast, { Toaster } from "react-hot-toast"
 import { validateIconForm } from "@/utils/validateForm"
 import axios from "axios"
-import Image from "next/image"
 
 const AddIcon = () => {
   const [files, setFiles] = useState<File[] | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const [iconFormData, setIconFormData] = useState<IIconFormData>({
     iconStyle: "",
     license: "",
     category: "",
     tags: [],
-    file: [],
+    files: [],
   })
 
   const clearForm = () => {
@@ -26,7 +26,7 @@ const AddIcon = () => {
       license: "",
       category: "",
       tags: [],
-      file: [],
+      files: [],
     })
 
     setFiles(null)
@@ -47,45 +47,33 @@ const AddIcon = () => {
   }
 
   const handlePublishProduct = async () => {
-    if (!files || files.length === 0) {
-      toast.error("Please upload the icon file")
+    setLoading(true)
+
+    const isFormValid = validateIconForm(iconFormData)
+    if (!files || !isFormValid) {
+      setLoading(false)
       return
     }
 
+    const formData = new FormData()
+    formData.append("iconStyle", iconFormData.iconStyle)
+    formData.append("license", iconFormData.license)
+    formData.append("category", iconFormData.category)
+    iconFormData.tags.forEach((tag) => formData.append("tags", tag))
+    files.forEach((file) => formData.append("files", file))
+
     try {
-      /* const preValidity = validateIconForm(iconFormData)
-      if (preValidity === false) return */
-
-      const fileUrls = await fileUpload(files, "icons")
-      console.log(fileUrls)
-
-      if (fileUrls.s3Status === "error") {
-        toast.error("Error uploading the icon file")
-        return
-      }
-
-      const updatedFormData = {
-        ...iconFormData,
-        file: fileUrls.fileUrls || [],
-      }
-      console.log(updatedFormData)
-
-      const validity = validateIconForm(updatedFormData)
-      if (validity === false) return
-
-      const response = await axios.post("/api/add-icon", updatedFormData)
-
+      const response = await axios.post("/api/add-icon", formData)
       if (response.data.success) {
-        console.log(response.data)
-        toast.success("Icon uploaded successfully")
+        toast.success(response.data.message)
+        clearForm()
       } else {
-        toast.error("Error uploading the icon")
+        toast.error(response.data.message)
       }
-
-      clearForm()
     } catch (err) {
-      console.error(err)
       toast.error("Something went wrong")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -97,6 +85,7 @@ const AddIcon = () => {
           title="Add the icon information below"
           handleSaveAsDraft={handleSaveAsDraft}
           handlePublishProduct={handlePublishProduct}
+          loading={loading}
         />
 
         <IconUploadForm

@@ -56,7 +56,7 @@ const IconUploadForm = ({
         <div className="mb-6">
           <FileUpload
             label={"Main files (Icon)"}
-            accept={"images/*"}
+            accept={"image/*"}
             files={files}
             setFiles={setFiles}
           />
