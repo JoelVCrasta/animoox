@@ -26,6 +26,15 @@ export interface IPackFormData {
   keyFeatures: string[]
 }
 
+export type IPackFormData2 = Omit<
+  IPackFormData,
+  | "thumbnailUrl"
+  | "illustrationUrl"
+  | "animationUrl"
+  | "featureImageUrl"
+  | "productViewImageUrl"
+>
+
 export interface IPackFiles {
   thumbnailFile: File[] | null
   illustrationFile: File[] | null

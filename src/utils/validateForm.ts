@@ -1,15 +1,14 @@
 import { toast } from "react-hot-toast"
 import {
   addIconSchema,
-  addPackSchema,
+  addProductSchema,
   filesSchema,
   preAddIconSchema,
-  preAddPackSchema,
   requestProjectSchema,
 } from "@/utils/zodSchema"
 import type {
   IIconFormData,
-  IPackFormData,
+  IPackFormData2,
   IPackFiles,
   IRequestProjectFormData,
 } from "@/utils/types"
@@ -34,19 +33,9 @@ export const validatePreAddIcon = (data: IIconFormData) => {
   }
 }
 
-export const validateAddProduct = (data: IPackFormData) => {
+export const validateAddProduct = (data: IPackFormData2) => {
   try {
-    addPackSchema.parse(data)
-    return true
-  } catch (err) {
-    toast.error("Please fill all the fields.")
-    return false
-  }
-}
-
-export const validatePreAddProduct = (data: IPackFormData) => {
-  try {
-    preAddPackSchema.parse(data)
+    addProductSchema.parse(data)
     return true
   } catch (err) {
     toast.error("Please fill all the fields.")
