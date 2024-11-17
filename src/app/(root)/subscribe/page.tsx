@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { openSubscriptionCheckout } from "@/lib/paddleLoader"
+import { openSubscriptionCheckout } from "@/lib/paddle-loader"
 
 export default function SlidePricing() {
   const [selected, setSelected] = useState<"M" | "A">("M")
