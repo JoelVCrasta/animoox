@@ -39,3 +39,239 @@
     line-height: 34px !important;
   }
 }
+
+.table-main{
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white;
+  margin-top: 30px;
+}
+
+.table-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-primary{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  background-color: #4F73FF;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+}
+.btn-secondary{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  background-color: #2C2F50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+}
+.plusSvg{
+  font-size: 18px;
+}
+.table-head-right{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.head{
+  color: #2C2F50;
+}
+
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+.table thead tr {
+  border-bottom: 1px solid rgb(225 225 225);
+}
+.table tbody {
+  display: block;
+  overflow-y: scroll;
+  padding: 0px !important;
+}
+.table thead,
+.table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.table.product thead tr th:nth-child(1) {
+  width: 23.5%;
+}
+.table.product thead tr th:nth-child(2) {
+  width: 20%;
+}
+.table.product thead tr th:nth-child(3) {
+  width: 15%;
+}
+.table.product thead tr th:nth-child(4) {
+  width: 12%;
+}
+.table.product thead tr th:nth-child(5) {
+  width: 15%;
+}
+.table.product thead tr th:nth-child(6) {
+  width: 10%;
+}
+
+
+.table.product tbody tr td:nth-child(1) {
+  width: 100%;
+}
+.table.product tbody tr td:nth-child(2) {
+  width: 20%;
+}
+.table.product tbody tr td:nth-child(3) {
+  width: 17%;
+}
+.table.product tbody tr td:nth-child(4) {
+  width: 13%;
+}
+.table.product tbody tr td:nth-child(5) {
+  width: 15%;
+}
+.table.product tbody tr td:nth-child(6) {
+  width: 10%;
+}
+
+
+.table tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  color: #000;
+  font-size: 14px;
+  padding: 12px;
+  text-align: start;
+  vertical-align: middle;
+  border: none;
+}
+.theadlist{
+  display: flex;
+  align-items: center;
+}
+.prod-name{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.table thead tr {
+  background-color: #EDF1FF;
+  border-radius: 20px;
+}
+.table thead tr th {
+  font-weight: 500;
+}
+.table tbody tr {
+  background-color: #fff;
+  border-bottom: 1px solid #E8E8EC;
+}
+.table tbody tr:hover {
+  background-color: rgba(230, 244, 255, 0.5);
+}
+.active{
+  border: 1px solid #89D62A;
+  color: #89D62A;
+  background-color: #F3FBEA;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  max-width: 100px;
+}
+.rejected{
+  border: 1px solid #FF4326;
+  color: #FF4326;
+  background-color: #FFECE9;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  max-width: 100px;
+}
+.pending{
+  border: 1px solid #FFC13D;
+  color: #FFC13D;
+  background-color: #FFF9EC;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  max-width: 100px;
+}
+.tbody{
+  height: 450px;
+}
+.actions{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.actionSvg{
+  font-size: 16px;
+  cursor: pointer;
+}
+.footer-table{
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-p{
+  font-size: 12px;
+  font-weight: 400;
+}
+.pagination{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pages{
+  background-color: #E8E8EC;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #8A8B9E;
+}
+.page-active{
+  color: black;
+}
+
+.upload-cloud-circle {
+  fill: linear-gradient(180deg, #FFF 0%, #F0F6FF 100%);
+  stroke-width: 1px;
+  stroke: #EBF0FF;
+  box-shadow: -5px -5px 10px 0px rgba(29, 29, 29, 0.15) inset, 4px 2px 4px 0px rgba(29, 29, 29, 0.03) inset;
+}
+
+.bell{
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+}
