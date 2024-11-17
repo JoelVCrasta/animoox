@@ -91,70 +91,70 @@ export default Sidebar
 
 
 const NavItems = [
-    {
-        title: "Overview",
-        href: "#",
-        icon: <HomeIcon />,
-    },
-    {
-        title: "Inbox",
-        href: "/inbox",
-        icon: <LetterIcon />,
-    },
-    {
-        title: "Product Management",
-        href: "/product-management",
-        icon: <ManagementBoxIcon />,
-    },
-    {
-        title: "Icon Management",
-        href: "#",
-        icon: <ManagementBoxIcon />,
-    },
-    {
-        title: "Analytics",
-        href: "#",
-        icon: <AnalyticsBarIcon />,
-    },
-    {
-        title: "Sales & Pricing",
-        href: "#",
-        icon: <SalesBagIcon />,
-    },
-    {
-        title: "Subscription",
-        href: "#",
-        icon: <CursorIcon />,
-    },
-    {
-        title: "Newsletter Management",
-        href: "#",
-        icon: <NewsletterIcon />,
-    },
-    {
-        title: "Setting",
-        href: "#",
-        icon: <SettingsIcon/>,
-    },
-    {
-        title: "Email Campaigns",
-        href: "#",
-        icon: <LetterIcon />,
-    },
-    {
-        title: "Traffic Insights",
-        href: "#",
-        icon: <TrafficInsightsIcon />,
-    },
-    {
-        title: "Order Management",
-        href: "#",
-        icon: <OrderManagementIcon />,
-    },
-    {
-        title: "Pricing Management",
-        href: "#",
-        icon: <DollarIcon />,
-    },
+  {
+      title: "Overview",
+      href: "#",
+      icon: <HomeIcon />,
+  },
+  {
+      title: "Inbox",
+      href: "/inbox",
+      icon: <LetterIcon />,
+  },
+  {
+      title: "Product Management",
+      href: "/admin/product-management",
+      icon: <ManagementBoxIcon />,
+  },
+  {
+      title: "Icon Management",
+      href: "#",
+      icon: <ManagementBoxIcon />,
+  },
+  {
+      title: "Analytics",
+      href: "#",
+      icon: <AnalyticsBarIcon />,
+  },
+  {
+      title: "Sales & Pricing",
+      href: "#",
+      icon: <SalesBagIcon />,
+  },
+  {
+      title: "Subscription",
+      href: "#",
+      icon: <CursorIcon />,
+  },
+  {
+      title: "Newsletter Management",
+      href: "#",
+      icon: <NewsletterIcon />,
+  },
+  {
+      title: "Setting",
+      href: "#",
+      icon: <SettingsIcon/>,
+  },
+  {
+      title: "Email Campaigns",
+      href: "#",
+      icon: <LetterIcon />,
+  },
+  {
+      title: "Traffic Insights",
+      href: "#",
+      icon: <TrafficInsightsIcon />,
+  },
+  {
+      title: "Order Management",
+      href: "/admin/order-management",
+      icon: <OrderManagementIcon />,
+  },
+  {
+      title: "Pricing Management",
+      href: "#",
+      icon: <DollarIcon />,
+  },
 
 ]
