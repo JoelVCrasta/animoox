@@ -5,7 +5,6 @@ export const addIconSchema = z.object({
   license: z.string().min(1),
   category: z.string().min(1),
   tags: z.array(z.string()).min(1),
-  file: z.array(z.string()).min(1),
 })
 
 export const preAddIconSchema = z.object({

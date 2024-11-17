@@ -5,7 +5,7 @@ export interface IIconFormData {
   license: string
   category: string
   tags: string[]
-  file: string[]
+  files: string[]
 }
 
 export interface IPackFormData {
