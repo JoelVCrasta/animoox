@@ -4,10 +4,11 @@ import { useState, useEffect } from "react"
 import IconUploadForm from "@/components/IconUploadForm"
 import HeadingInfo from "@/components/HeadingInfo"
 import type { IIconFormData } from "@/utils/types"
-import { fileUpload } from "@/actions/s3Upload"
+import { fileUpload } from "@/lib/s3Upload"
 import toast, { Toaster } from "react-hot-toast"
 import { validateIconForm } from "@/utils/validateForm"
 import axios from "axios"
+import Image from "next/image"
 
 const AddIcon = () => {
   const [files, setFiles] = useState<File[] | null>(null)
@@ -52,8 +53,8 @@ const AddIcon = () => {
     }
 
     try {
-      const preValidity = validateIconForm(iconFormData)
-      if (preValidity === false) return
+      /* const preValidity = validateIconForm(iconFormData)
+      if (preValidity === false) return */
 
       const fileUrls = await fileUpload(files, "icons")
       console.log(fileUrls)
@@ -91,9 +92,7 @@ const AddIcon = () => {
   return (
     <section className="w-full">
       <Toaster />
-
       <div className="w-full p-4 md:px-10">
-
         <HeadingInfo
           title="Add the icon information below"
           handleSaveAsDraft={handleSaveAsDraft}

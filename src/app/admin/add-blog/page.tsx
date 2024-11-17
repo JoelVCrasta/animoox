@@ -4,12 +4,8 @@ import { useState, useEffect } from "react"
 import BlogUploadForm from "@/components/blog-upload-form"
 import HeadingInfo from "@/components/HeadingInfo"
 import type { IPackFormData, IPackFiles } from "@/utils/types"
-import {
-  validateAddProduct,
-  validateFiles,
-  validatePreAddProduct,
-} from "@/utils/validateForm"
-import { fileUpload, imageCompUpload } from "@/actions/s3Upload"
+import { validateAddProduct, validateFiles } from "@/utils/validateForm"
+import { fileUpload, imageOptimUpload } from "@/lib/s3Upload"
 import toast, { Toaster } from "react-hot-toast"
 import axios from "axios"
 
@@ -86,12 +82,6 @@ const AddPack = () => {
   const handlePublishProduct = async () => {
     setLoading(true)
 
-    const preValidity = validatePreAddProduct(packFormData)
-    if (preValidity === false) {
-      setLoading(false)
-      return
-    }
-
     const isFilesValid = validateFiles(files)
     if (isFilesValid === false) {
       toast.error("Please upload all the files.")
@@ -108,17 +98,17 @@ const AddPack = () => {
         files.animationFile as File[],
         "packs/animations"
       )
-      const thumbnailFileUrls = await imageCompUpload(
+      const thumbnailFileUrls = await imageOptimUpload(
         files.thumbnailFile as File[],
         "packs/thumbnails",
         0.5,
         250
       )
-      const featureImageFileUrls = await imageCompUpload(
+      const featureImageFileUrls = await imageOptimUpload(
         files.featureImageFiles as File[],
         "packs/features"
       )
-      const productViewImageFileUrls = await imageCompUpload(
+      const productViewImageFileUrls = await imageOptimUpload(
         files.productViewImageFiles as File[],
         "packs/product-views"
       )
@@ -173,7 +163,6 @@ const AddPack = () => {
       <Toaster />
 
       <div className="w-full p-4 md:p-10">
-
         <HeadingInfo
           title="Add the pack information below"
           handleSaveAsDraft={handleSaveAsDraft}
