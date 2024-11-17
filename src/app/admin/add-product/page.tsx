@@ -122,7 +122,7 @@ const AddProduct = () => {
       const response = await axios.post("/api/add-product", formData)
       if (response.data.success) {
         toast.success(response.data.message)
-        /* clearForm() */
+        clearForm()
       } else {
         toast.error(response.data.message)
       }

@@ -93,7 +93,7 @@ const PackUploadForm = ({
               <FileUpload
                 label={"Thumbnail"}
                 subLabel={"Thumbnail 250x250"}
-                accept={"images/*"}
+                accept={"image/*"}
                 files={files.thumbnailFile}
                 setFiles={(file) => setFiles({ ...files, thumbnailFile: file })}
                 height={96}
@@ -128,7 +128,7 @@ const PackUploadForm = ({
             subLabel={
               "Images will be cropped at 800x600 for the thumbnail preview but will remain unchanged in full view mode."
             }
-            accept={"images/*"}
+            accept={"image/*"}
             files={files.featureImageFiles}
             setFiles={(file) => setFiles({ ...files, featureImageFiles: file })}
             multiple={false}
@@ -141,7 +141,7 @@ const PackUploadForm = ({
             subLabel={
               "Images will be cropped at 800x600 for the thumbnail preview but will remain unchanged in full view mode."
             }
-            accept={"images/*"}
+            accept={"image/*"}
             files={files.productViewImageFiles}
             setFiles={(file) =>
               setFiles({ ...files, productViewImageFiles: file })
