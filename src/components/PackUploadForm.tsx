@@ -6,13 +6,12 @@ import Input from "./Input"
 import InputArea from "./InputArea"
 import FileUpload from "./FileUpload"
 import KeyFeatures from "./KeyFeatures"
-import DisplayFiles from "./DisplayFiles"
 import CompatibilityIcons from "./CompatibilityIcons"
-import { IPackFormData, IPackFiles } from "@/utils/types"
+import { IPackFormData2, IPackFiles } from "@/utils/types"
 
 interface IconUploadFormProps {
-  packFormData: IPackFormData
-  setPackFormData: (value: IPackFormData) => void
+  packFormData: IPackFormData2
+  setPackFormData: (value: IPackFormData2) => void
   files: IPackFiles
   setFiles: (files: IPackFiles) => void
 }

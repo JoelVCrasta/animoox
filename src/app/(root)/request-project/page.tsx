@@ -16,7 +16,7 @@ import { useSession } from "next-auth/react"
 import toast, { Toaster } from "react-hot-toast"
 import { IRequestProjectFormData } from "@/utils/types"
 import { validateRequestProject } from "@/utils/validateForm"
-import { fileUpload } from "@/actions/s3Upload"
+import { fileUpload } from "@/lib/s3Upload"
 import axios from "axios"
 
 export default function InquiryForm() {
