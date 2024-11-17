@@ -9,6 +9,7 @@ export const publicRoutes = [
     "/components",
     "/products",
     "/products-preview",
+    "/icons",
     "^/products-preview/.*",
     "/cart",
     "/api/product",
@@ -53,15 +54,5 @@ export const DEFAULT_LOGIN_REDIRECT = "/products";
  * @type {string[]}
  */
 export const adminRoutes = [
-    "/admin",
-    "/admin/add-icon",
-    "/admin/add-pack",
-    "/admin/orders",
-    "/admin/products",
-    "/admin/users",
-    "/api/add-icon",
-    "/api/add-pack",
-    "/api/orders",
-    "/api/product-management",
-    "/api/users"
+    "/admin/test",
 ];

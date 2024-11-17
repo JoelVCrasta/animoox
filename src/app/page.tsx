@@ -11,10 +11,7 @@ import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { PaddleLogo, ProductivityLeft, ProductivityRight } from "@/assets/images"
 import Image from "next/image"
-import { Etablir, Goddady, Ibm, KickBoost, LottieFiles, Perigon, Plume, Socrates, Sturdy, Synopsys, Syntrum, TripleWhale, ProductivityLogo } from "@/assets/images"
-import { ProductivityStar } from "@/assets/icons/productivity-star"
-import { ProductivityRect } from "@/assets/icons/productivity-rect"
-import { ProductivityOval } from "@/assets/icons/productivity-oval"
+import { Etablir, Goddady, Ibm, KickBoost, LottieFiles, Perigon, Plume, Socrates, Sturdy, Synopsys, Syntrum, TripleWhale, ProductivityLogo, ProductivityStar, ProductivityRect, ProductivityOval } from "@/assets/images"
 import { FaqIcon } from "@/assets/icons/faq-icon"
 import FAQAccordion from "@/components/accordian"
 
@@ -241,9 +238,9 @@ export default function Page(): JSX.Element {
         </div>
         <div className="w-full mt-20 px-[30rem] relative ">
           <div className="relative bg-red-100">
-            <div className="absolute w-80 left-0 top-0"><ProductivityStar /></div>
-            <div className="absolute w-80 top-0 left-40"><ProductivityRect /></div>
-            <div className="absolute w-80 right-0 "><ProductivityOval /></div>
+            <Image src={ProductivityStar} alt="" className="absolute left-0 top-0"/>
+            <Image src={ProductivityRect} alt="" className="absolute top-0 left-80"/>
+            <Image src={ProductivityOval} alt="" className="absolute right-0"/>
           </div>
         </div>
       </section>

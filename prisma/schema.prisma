@@ -118,6 +118,8 @@ model Product {
   category             String
   title                String
   description          String
+  pageView String?
+  status String?
   smallDescription     String?
   animationCount       Int?
   buttonText           String
@@ -133,7 +135,9 @@ model Subscription {
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
   plan          String
   status        String
-  expiryDate    DateTime
+  startDate     DateTime
+  renewalDate   DateTime
+  trafficSource String @default("Social Media")
   createdAt     DateTime @default(now())
 }
 
@@ -181,6 +185,8 @@ model Order {
   name          String
   email         String
   message       String
+  status        String @default("ordered")
+  trafficSource String @default("application")
   projectType   ProjectType
   budget        String
   attachmentUrl String?  // URL to the uploaded file (e.g., AWS S3, Cloudinary)
@@ -188,6 +194,23 @@ model Order {
 
   @@map("orders") // Optional: Maps the model to the "orders" collection in MongoDB
 }
+
+model Pricing {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  type          String    @unique
+  price         Float
+  save          Int
+  discount      Float
+  duration      String
+  description   String
+  features      String[]
+  status        String @default("save")
+  createdAt     DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@map("pricing")
+}
+
 
 enum ProjectType {
   Lottie
